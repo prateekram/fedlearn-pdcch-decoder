@@ -1,13 +1,18 @@
 function avgGrads = FedAvg(gradsCell)
     avgGrads = gradsCell{1};
-    for i = 2:numel(gradsCell)
-        fields = fieldnames(avgGrads);
-        for f = 1:numel(fields)
-            avgGrads.(fields{f}) = avgGrads.(fields{f}) + gradsCell{i}.(fields{f});
+    fields = fieldnames(avgGrads);
+
+    for f = 1:length(fields)
+        avgGrads.(fields{f}) = double(avgGrads.(fields{f}));
+    end
+
+    for i = 2:length(gradsCell)
+        for f = 1:length(fields)
+            avgGrads.(fields{f}) = avgGrads.(fields{f}) + double(gradsCell{i}.(fields{f}));
         end
     end
-    fields = fieldnames(avgGrads);
-    for f = 1:numel(fields)
-        avgGrads.(fields{f}) = avgGrads.(fields{f}) / numel(gradsCell);
+
+    for f = 1:length(fields)
+        avgGrads.(fields{f}) = avgGrads.(fields{f}) / length(gradsCell);
     end
 end
